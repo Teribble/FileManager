@@ -29,14 +29,16 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.iconPicBox = new System.Windows.Forms.PictureBox();
             this.closePicBox = new System.Windows.Forms.PictureBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.iconPicBox = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.rightAdressStroke = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.rightDiskListBox = new System.Windows.Forms.ListBox();
             this.label4 = new System.Windows.Forms.Label();
             this.rightListView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panel3 = new System.Windows.Forms.Panel();
             this.leftAdressStroke = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,12 +46,9 @@
             this.leftDiskListBox = new System.Windows.Forms.ListBox();
             this.leftListView = new System.Windows.Forms.ListView();
             this.folders = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.label5 = new System.Windows.Forms.Label();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPicBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.closePicBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPicBox)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.SuspendLayout();
@@ -67,15 +66,6 @@
             this.panel1.TabIndex = 0;
             this.panel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMovePanel1);
             // 
-            // iconPicBox
-            // 
-            this.iconPicBox.Location = new System.Drawing.Point(5, 2);
-            this.iconPicBox.Name = "iconPicBox";
-            this.iconPicBox.Size = new System.Drawing.Size(20, 20);
-            this.iconPicBox.TabIndex = 3;
-            this.iconPicBox.TabStop = false;
-            this.iconPicBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMoveIconPicBox);
-            // 
             // closePicBox
             // 
             this.closePicBox.Location = new System.Drawing.Point(575, 2);
@@ -87,10 +77,29 @@
             this.closePicBox.MouseEnter += new System.EventHandler(this.OnMouseEnterClosePicBox);
             this.closePicBox.MouseLeave += new System.EventHandler(this.OnMouseLeaveClosePicBox);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label5.Location = new System.Drawing.Point(31, 4);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(73, 16);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "FileManager";
+            this.label5.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMoveLabel5);
+            // 
+            // iconPicBox
+            // 
+            this.iconPicBox.Location = new System.Drawing.Point(5, 2);
+            this.iconPicBox.Name = "iconPicBox";
+            this.iconPicBox.Size = new System.Drawing.Size(20, 20);
+            this.iconPicBox.TabIndex = 3;
+            this.iconPicBox.TabStop = false;
+            this.iconPicBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMoveIconPicBox);
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.LightCyan;
-            this.panel2.Controls.Add(this.listBox1);
             this.panel2.Controls.Add(this.rightAdressStroke);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.rightDiskListBox);
@@ -140,6 +149,7 @@
             // 
             this.rightListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
+            this.rightListView.HideSelection = false;
             this.rightListView.Location = new System.Drawing.Point(3, 37);
             this.rightListView.MultiSelect = false;
             this.rightListView.Name = "rightListView";
@@ -148,6 +158,11 @@
             this.rightListView.TabStop = false;
             this.rightListView.UseCompatibleStateImageBehavior = false;
             this.rightListView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Папки и файлы";
+            this.columnHeader1.Width = 230;
             // 
             // panel3
             // 
@@ -169,6 +184,7 @@
             this.leftAdressStroke.Size = new System.Drawing.Size(258, 20);
             this.leftAdressStroke.TabIndex = 4;
             this.leftAdressStroke.TabStop = false;
+            this.leftAdressStroke.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDownLeftAdressStroke);
             // 
             // label2
             // 
@@ -201,6 +217,7 @@
             // 
             this.leftListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.folders});
+            this.leftListView.HideSelection = false;
             this.leftListView.Location = new System.Drawing.Point(3, 37);
             this.leftListView.MultiSelect = false;
             this.leftListView.Name = "leftListView";
@@ -216,30 +233,6 @@
             this.folders.Text = "Папки и файлы";
             this.folders.Width = 230;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(31, 4);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 16);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "FileManager";
-            this.label5.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnMouseMoveLabel5);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Папки и файлы";
-            this.columnHeader1.Width = 230;
-            // 
-            // listBox1
-            // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(64, 124);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(180, 121);
-            this.listBox1.TabIndex = 6;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,13 +243,14 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.iconPicBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.closePicBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.iconPicBox)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -285,7 +279,6 @@
         private System.Windows.Forms.PictureBox iconPicBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ListBox listBox1;
     }
 }
 
