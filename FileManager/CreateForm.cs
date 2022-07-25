@@ -13,9 +13,24 @@ namespace FileManager
 
         private void OnClickDirectoryCreate(object sender, EventArgs e)
         {
-            if (Directory.Exists(pathBox.Text))
+            string path = pathBox.Text + "\\" + nameBox.Text;
+            if (Directory.Exists(pathBox.Text) && !Directory.Exists(path))
             {
-                Directory.CreateDirectory(pathBox.Text + "\\" + nameBox.Text);
+                try
+                {
+                    Directory.CreateDirectory(pathBox.Text + "\\" + nameBox.Text);
+
+                    if (Directory.Exists(pathBox.Text + "\\" + nameBox.Text))
+                        MessageBox.Show("Папка создана");
+                }
+                catch
+                {
+                    MessageBox.Show("Объект с таким именем уже существует");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Не верно указан путь либо папка уже существует");
             }
         }
 
@@ -23,7 +38,15 @@ namespace FileManager
         {
             if (Directory.Exists(pathBox.Text) && !File.Exists(pathBox.Text + "\\" + nameBox.Text))
             {
-                File.Create(pathBox.Text + "\\" + nameBox.Text);
+                try
+                {
+                    FileStream fs = File.Create(pathBox.Text + "\\" + nameBox.Text);
+                    fs.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Объект с таким именем уже существует");
+                }
             }
             else
             {

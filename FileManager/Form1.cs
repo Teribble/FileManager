@@ -42,9 +42,17 @@ namespace FileManager
 
             leftListView.SmallImageList = imageList;
 
-            rightListView.SmallImageList = imageList;
-
             iconPicBox.BackgroundImage = new Bitmap(@"..\..\Resources\Icon.png");
+
+            pictureBox1.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Create.png");
+
+            pictureBox2.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Delete.png");
+
+            pictureBox3.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Copy.png");
+
+            pictureBox4.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Move.png");
+
+            LoadPicImage();
         }
 
         private void OnMouseEnterClosePicBox(object sender, EventArgs e)
@@ -78,8 +86,6 @@ namespace FileManager
             info.ToList().ForEach(item =>
             {
                 leftDiskListBox.Items.Add(item);
-
-                rightDiskListBox.Items.Add(item);
             });
         }
 
@@ -131,16 +137,6 @@ namespace FileManager
             }
         }
 
-        private void OnClickRightDiskListBox(object sender, EventArgs e)
-        {
-            if (rightDiskListBox.SelectedItem != null)
-            {
-                PrintSelectItemListView(rightListView, rightDiskListBox, label3, _mirrorRLV);
-
-                rightAdressStroke.Text = rightDiskListBox.SelectedItem.ToString();
-            }
-        }
-
         private void OnMouseMoveLabel5(object sender, MouseEventArgs e)
         {
             label5.Capture = false;
@@ -171,7 +167,7 @@ namespace FileManager
                     {
                         leftAdressStroke.Text = _stackLeft.Peek();
 
-                        leftListView.Items.Add(new ListViewItem(Back,2));
+                        leftListView.Items.Add(new ListViewItem(Back, 2));
 
                         new DirectoryInfo(_stackLeft.Peek()).GetDirectories().ToList().ForEach(folder =>
                         {
@@ -186,7 +182,7 @@ namespace FileManager
 
                             _mirrorLLV.Add(file.FullName);
                         });
-                    }                
+                    }
                 }
                 else if (Directory.Exists(_mirrorLLV[leftListView.SelectedItems[0].Index - 1]))
                 {
@@ -273,19 +269,37 @@ namespace FileManager
             list.Clear();
         }
 
-        private void OnMouseEnterPicBox1(object sender, EventArgs e)
-        {
-            pictureBox1.Size = new Size(30, 30);
-        }
-
-        private void OnMouseLeavePicBox1(object sender, EventArgs e)
-        {
-            pictureBox1.Size = new Size(40, 40); 
-        }
-
         private void OnClickPicBox1(object sender, EventArgs e)
         {
             new CreateForm().ShowDialog();
+        }
+
+        private void LoadPicImage()
+        {
+            pictureBox1.MouseMove += (s, a) => { pictureBox1.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Create_move.png"); };
+            pictureBox2.MouseMove += (s, a) => { pictureBox2.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Delete_move.png"); };
+            pictureBox3.MouseMove += (s, a) => { pictureBox3.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Copy_move.png"); };
+            pictureBox4.MouseMove += (s, a) => { pictureBox4.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Move_move.png"); };
+
+            pictureBox1.MouseLeave += (s, a) => { pictureBox1.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Create.png"); };
+            pictureBox2.MouseLeave += (s, a) => { pictureBox2.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Delete.png"); };
+            pictureBox3.MouseLeave += (s, a) => { pictureBox3.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Copy.png"); };
+            pictureBox4.MouseLeave += (s, a) => { pictureBox4.BackgroundImage = new Bitmap(@"..\..\Resources\Panel\Move.png"); };
+        }
+
+        private void OnClickDeletePicBox2(object sender, EventArgs e)
+        {
+            new DeleteForm().ShowDialog();
+        }
+
+        private void OnClickCopyPicBox3(object sender, EventArgs e)
+        {
+            new CopyForm().ShowDialog();
+        }
+
+        private void OnClickPicBox4(object sender, EventArgs e)
+        {
+            new MoveForm().ShowDialog();
         }
     }
 }
