@@ -35,7 +35,8 @@ namespace FileManager
                 Images =
                 {
                     new Bitmap(@"..\..\Resources\File.png"),
-                    new Bitmap(@"..\..\Resources\Folder.png")
+                    new Bitmap(@"..\..\Resources\Folder.png"),
+                    new Bitmap(@"..\..\Resources\Back.png")
                 }
             };
 
@@ -96,7 +97,7 @@ namespace FileManager
 
                 var selectDirectory = new DirectoryInfo(listbox.SelectedItem.ToString());
 
-                listView.Items.Add(new ListViewItem(Back));
+                listView.Items.Add(new ListViewItem(Back, 2));
 
                 selectDirectory.GetDirectories().ToList().ForEach(folder =>
                 {
@@ -164,18 +165,13 @@ namespace FileManager
             {
                 if (leftListView.SelectedItems[0].Text == Back)
                 {
-                    leftListView.Items.Clear();
-
-                    _mirrorLLV.Clear();
-
-                    if (_stackLeft.Count > 0)
-                    {
-                        leftListView.Items.Add(new ListViewItem(Back));
-                    }
+                    Clear(leftListView, _mirrorLLV);
 
                     if (_stackLeft.Count > 0)
                     {
                         leftAdressStroke.Text = _stackLeft.Peek();
+
+                        leftListView.Items.Add(new ListViewItem(Back,2));
 
                         new DirectoryInfo(_stackLeft.Peek()).GetDirectories().ToList().ForEach(folder =>
                         {
@@ -200,33 +196,41 @@ namespace FileManager
 
                         _stackLeft.Push(new DirectoryInfo(_mirrorLLV[leftListView.SelectedItems[0].Index - 1]).Parent.FullName);
 
-                        leftListView.Items.Clear();
+                        AddInfoListView(leftListView, _mirrorLLV);
 
-                        _mirrorLLV.Clear();
-
-                        leftListView.Items.Add(new ListViewItem(Back));
-
-                        new DirectoryInfo(leftAdressStroke.Text).GetDirectories().ToList().ForEach(item =>
-                        {
-                            leftListView.Items.Add(new ListViewItem(item.Name, 1));
-
-                            _mirrorLLV.Add(item.FullName);
-                        });
-
-                        new DirectoryInfo(leftAdressStroke.Text).GetFiles().ToList().ForEach(item =>
-                        {
-                            leftListView.Items.Add(new ListViewItem(item.Name, 0));
-
-                            _mirrorLLV.Add(item.FullName);
-                        });
                     }
                     catch (UnauthorizedAccessException)
                     {
-
                         MessageBox.Show("От админа прогу запусти");
                     }
                 }
             }
+        }
+
+        private void AddInfoListView(ListView listView, List<string> mirrorList)
+        {
+            Clear(listView, mirrorList);
+
+            listView.Items.Add(new ListViewItem(Back, 2));
+
+            new DirectoryInfo(leftAdressStroke.Text).GetDirectories().ToList().ForEach(folder =>
+            {
+                listView.Items.Add(new ListViewItem(folder.Name, 1));
+
+                mirrorList.Add(folder.FullName);
+            });
+
+            new DirectoryInfo(leftAdressStroke.Text).GetFiles().ToList().ForEach(file =>
+            {
+                listView.Items.Add(new ListViewItem(file.Name, 0));
+
+                mirrorList.Add(file.FullName);
+            });
+        }
+
+        private void AddNewLineListView(ListView listView, string path)
+        {
+
         }
 
         private void OnKeyDownLeftAdressStroke(object sender, KeyEventArgs e)
@@ -243,7 +247,7 @@ namespace FileManager
 
                     _mirrorLLV.Clear();
 
-                    leftListView.Items.Add(new ListViewItem(Back));
+                    leftListView.Items.Add(new ListViewItem(Back, 2));
 
                     selectInfo.GetDirectories().ToList().ForEach(folder =>
                     {
@@ -260,6 +264,28 @@ namespace FileManager
                     });
                 }
             }
+        }
+
+        private void Clear(ListView listView, List<string> list)
+        {
+            listView.Items.Clear();
+
+            list.Clear();
+        }
+
+        private void OnMouseEnterPicBox1(object sender, EventArgs e)
+        {
+            pictureBox1.Size = new Size(30, 30);
+        }
+
+        private void OnMouseLeavePicBox1(object sender, EventArgs e)
+        {
+            pictureBox1.Size = new Size(40, 40); 
+        }
+
+        private void OnClickPicBox1(object sender, EventArgs e)
+        {
+            new CreateForm().ShowDialog();
         }
     }
 }
